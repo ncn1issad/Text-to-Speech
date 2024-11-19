@@ -1,5 +1,6 @@
 from pydub import AudioSegment
 import os
+import re
 
 AudioSegment.converter = "C:/ffmpeg-master-latest-win64-gpl/bin/ffmpeg.exe"
 
@@ -7,11 +8,16 @@ AudioSegment.converter = "C:/ffmpeg-master-latest-win64-gpl/bin/ffmpeg.exe"
 input_folder = "input_audio"  # Folder containing audio files to concatenate
 output_file = "output_combined_audio.mp3"  # Output file name
 
+
 # Function to concatenate audio files in segments to avoid memory issues
 def concatenate_audios_in_segments(input_folder, output_file, segment_size=60 * 60 * 1000):
     # Get a list of all audio files in the input folder
     audio_files = [file for file in os.listdir(input_folder) if file.endswith(('.mp3', '.wav'))]
-    audio_files.sort()  # Sort the files if they need to be in a specific order
+
+    # Sort the files numerically based on the chunk number
+    audio_files.sort(key=lambda x: int(re.search(r'output_chunk_(\d+)\.mp3', x).group(1)))
+    # Alternatively:
+    # audio_files.sort(key=lambda x: int(x.split('_')[-1].split('.')[0]))
 
     if not audio_files:
         print("No audio files found in the specified folder.")
@@ -36,6 +42,7 @@ def concatenate_audios_in_segments(input_folder, output_file, segment_size=60 * 
     if len(combined_audio) > 0:
         combined_audio.export(output_file, format="mp3")
         print(f"Final concatenated audio saved to {output_file}")
+
 
 # Run the concatenation function
 concatenate_audios_in_segments(input_folder, output_file)

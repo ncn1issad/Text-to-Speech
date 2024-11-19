@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f29d8e06-4d22-477c-a800-c0d7b59e4cf3" name="Changes" comment="Cred ca merge">
-      <change afterPath="$PROJECT_DIR$/concatenator.py" afterDir="false" />
+    <list default="true" id="f29d8e06-4d22-477c-a800-c0d7b59e4cf3" name="Changes" comment="Merge perfect, sper">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/concatenator.py" beforeDir="false" afterPath="$PROJECT_DIR$/concatenator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,9 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ToolWindowRun.ShowToolbar": "false",
-    "git-widget-placeholder": "master"
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/help2/source/repos/Aplicatie turism"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -67,11 +68,20 @@
       <option name="project" value="LOCAL" />
       <updated>1731617870226</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Merge perfect, sper">
+      <option name="closed" value="true" />
+      <created>1731658229576</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731658229576</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Cred ca merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cred ca merge" />
+    <MESSAGE value="Merge perfect, sper" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge perfect, sper" />
   </component>
 </project>
