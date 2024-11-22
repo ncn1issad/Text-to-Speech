@@ -6,7 +6,7 @@ AudioSegment.converter = "C:/ffmpeg-master-latest-win64-gpl/bin/ffmpeg.exe"
 
 # Specify the input folder and output file
 input_folder = "input_audio"  # Folder containing audio files to concatenate
-output_file = "output_combined_audio.mp3"  # Output file name
+output_file = "final_audio_output.mp3"  # Output file name
 
 
 # Function to concatenate audio files in segments to avoid memory issues
