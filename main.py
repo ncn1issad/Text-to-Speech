@@ -2,6 +2,7 @@
 from TTS.api import TTS
 import torch
 import os
+import re
 
 import concatenator
 
@@ -26,7 +27,11 @@ if not available_speakers:
 print("Available speakers:", available_speakers)
 
 # Choose a speaker from the list
-chosen_speaker = available_speakers[available_speakers.index('p300')]  # Select the first speaker by default
+chosen_speaker = 'p311'  # Replace with your desired speaker ID
+if chosen_speaker not in available_speakers:
+    print(f"Chosen speaker '{chosen_speaker}' not found in the available speakers.")
+    exit()
+
 print("Chosen speaker:", chosen_speaker)
 
 # Input folder for generated audio chunks
@@ -35,11 +40,18 @@ input_folder = "input_audio"
 # Create the input folder if it doesn't exist
 if not os.path.exists(input_folder):
     os.makedirs(input_folder)
-    print(f"Created folder '{input_folder}'. Please add your audio files to this folder and rerun the script.")
+    print(f"Created folder '{input_folder}'.")
+
+# Function to sanitize text
+def sanitize_text(text):
+    # Remove non-ASCII characters
+    text = re.sub(r'[^\x00-\x7F]+', ' ', text)
+    # Remove excessive whitespace
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
 
 # Function to split large text into manageable chunks
-def split_text(text, max_length=2500):
-    import re
+def split_text(text, max_length=249):
     chunks = []
     sentences = re.split(r'(?<=[.!?]) +', text)  # Split text into sentences
 
@@ -47,7 +59,8 @@ def split_text(text, max_length=2500):
         if len(sentence) <= max_length:
             chunks.append(sentence)
         else:
-            words = sentence.split()
+            # Split by words if the sentence is too long
+            words = sentence.split(" ")
             current_chunk = []
             current_length = 0
 
@@ -63,6 +76,7 @@ def split_text(text, max_length=2500):
             if current_chunk:
                 chunks.append(" ".join(current_chunk))
 
+    # Remove any empty chunks
     return [chunk for chunk in chunks if chunk.strip()]
 
 # Load the large text from a file
@@ -74,15 +88,24 @@ if not os.path.exists(text_file_path):
 with open(text_file_path, "r", encoding="utf-8") as file:
     text = file.read()
 
-# Split the text into chunks to avoid memory issues
+# Sanitize and split the text into chunks to avoid memory issues
+text = sanitize_text(text)
 text_chunks = split_text(text)
 
 # Iterate over chunks and generate speech for each, saving to separate MP3 files
 for i, chunk in enumerate(text_chunks):
+    # Ensure the chunk is within the character limit
+    chunk = sanitize_text(chunk)
     output_file = f"{input_folder}/output_chunk_{i + 1}.mp3"
-    # Generate speech using the chosen speaker
-    tts.tts_to_file(text=chunk, file_path=output_file, speaker=chosen_speaker)
-    print(f"Saved: {output_file}")
+
+    try:
+        # Generate speech using the chosen speaker
+        tts.tts_to_file(text=chunk, file_path=output_file, speaker=chosen_speaker)
+        print(f"Saved: {output_file}")
+    except IndexError as e:
+        print(f"IndexError for chunk {i}: {e}")
+    except Exception as e:
+        print(f"Error processing chunk {i}: {e}")
 
 print("Text-to-speech conversion completed successfully!")
 
